@@ -12,17 +12,31 @@ import {
   import { Input } from "@/components/ui/input"
   import { Link } from 'react-router-dom'
   import { useRef } from 'react'
+  import { useMutation } from 'react-query'
+  import {login} from "../http/api"
+  import { useNavigate } from 'react-router-dom'
 
 
 const Login = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
+    const navigate = useNavigate()
     
- 
+    const mutation = useMutation({
+      mutationFn: login,
+      onSuccess: () => {
+        console.log("login Successful");
+      },
+    })
 
 
     const handelLoginSubmit = ()=>{
-      console.log(emailRef.current.value,passwordRef.current.value);
+      const email = emailRef?.current?.value
+      const password = passwordRef?.current?.value
+
+      
+       mutation.mutate({email,password})
+       navigate("/dashboard/home")
     }
   
 
