@@ -4,12 +4,13 @@ import Homepage from "./pages/Homepage";
 import Register from "./pages/RegisterPage";
 import Dashboardlayout from "./layouts/DashboardLayout";
 import Dishes from "./pages/Dishes";
+import AuthLayout from "./layouts/AuthLayout";
 
 
 const router = createBrowserRouter([
 
     {
-        path:'/',
+        path:'/dashboard',
         element:<Dashboardlayout/>,
         children:[
             {
@@ -17,20 +18,29 @@ const router = createBrowserRouter([
                 element : <Homepage/>
             },
             {
-                element:"dishes",
+                path:"dishes",
                 element:<Dishes/>
             }
         ]
     },
     {
-        path:'/login',
-        element : <Login/>
-    },
-    {
-        path:"/signup",
-        element : <Register/>
-    }
+     path:"/auth",
+     element:<AuthLayout/>,
+      children:[
+        {
+            path:'login',
+            element : <Login/>
+        },
+        {
+            path:"signup",
+            element : <Register/>
+        }
+    
 
+      ]
+
+    },
+   
 
 ])
 

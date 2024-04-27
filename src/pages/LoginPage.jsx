@@ -39,7 +39,7 @@ const Login = () => {
     <CardFooter>
     <div className=" text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link to={'/signup'} className="underline">
+          <Link to={'/auth/signup'} className="underline">
             Sign up
           </Link>
         </div>
