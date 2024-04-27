@@ -11,9 +11,21 @@ import {
   import { Label } from "@/components/ui/label"
   import { Input } from "@/components/ui/input"
   import { Link } from 'react-router-dom'
+  import { useRef } from 'react'
 
 
 const Login = () => {
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    
+ 
+
+
+    const handelLoginSubmit = ()=>{
+      console.log(emailRef.current.value,passwordRef.current.value);
+    }
+  
+
   return (
      <div className=' h-screen justify-center flex items-center'>
     <Card className="w-full max-w-sm ">
@@ -26,15 +38,15 @@ const Login = () => {
     <CardContent className="grid gap-4">
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" placeholder="m@example.com" required />
+        <Input id="email" type="email" placeholder="m@example.com" required ref={emailRef} />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="password">Password</Label>
-        <Input id="password" type="password" required />
+        <Input id="password" type="password" required  ref={passwordRef}/>
       </div>
     </CardContent>
     <CardFooter>
-      <Button className="w-full">Sign in</Button>
+      <Button onClick={handelLoginSubmit} className="w-full">Sign in</Button>
     </CardFooter>
     <CardFooter>
     <div className=" text-center text-sm">
