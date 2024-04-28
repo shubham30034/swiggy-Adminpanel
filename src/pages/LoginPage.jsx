@@ -15,6 +15,7 @@ import {
   import { useMutation } from 'react-query'
   import {login} from "../http/api"
   import { useNavigate } from 'react-router-dom'
+  import { LoaderCircle } from 'lucide-react';
 
 
 const Login = () => {
@@ -26,18 +27,23 @@ const Login = () => {
       mutationFn: login,
       onSuccess: () => {
         console.log("login Successful");
+        navigate("/dashboard/home")
       },
     })
 
+    console.log("mutation",mutation);
 
     const handelLoginSubmit = ()=>{
       const email = emailRef?.current?.value
       const password = passwordRef?.current?.value
 
       
-       mutation.mutate({email,password})
-       navigate("/dashboard/home")
+       mutation.mutateAsync({email,password})
+     
+       
+    
     }
+
   
 
   return (
@@ -46,7 +52,8 @@ const Login = () => {
     <CardHeader>
       <CardTitle className="text-2xl">Login</CardTitle>
       <CardDescription>
-        Enter your email below to login to your account.
+        Enter your email below to login to your account
+        {mutation.isError&& <div className=' text-red-400'>{mutation.error.message}</div>}
       </CardDescription>
     </CardHeader>
     <CardContent className="grid gap-4">
@@ -60,13 +67,15 @@ const Login = () => {
       </div>
     </CardContent>
     <CardFooter>
-      <Button onClick={handelLoginSubmit} className="w-full">Sign in</Button>
+      <Button onClick={handelLoginSubmit} className="w-full flex items-center gap-5" disable={mutation.isPending}>
+      {mutation.  isPending &&  <LoaderCircle className=' animate-spin'/> }        <span>Sign in</span> 
+        </Button>
     </CardFooter>
     <CardFooter>
     <div className=" text-center text-sm">
           Don&apos;t have an account?{" "}
           <Link to={'/auth/signup'} className="underline">
-            Sign up
+              Sign up
           </Link>
         </div>
         </CardFooter>
