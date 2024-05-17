@@ -23,6 +23,7 @@ const Login = () => {
             console.log("login Successful", data.data.token);
 
             addToken(data?.data?.token);
+            
             navigate("/dashboard/home");
         },
     });

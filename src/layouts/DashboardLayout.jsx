@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React, { Children, useEffect } from 'react'
 
 import { Link } from "react-router-dom"
 import {
@@ -6,6 +6,7 @@ import {
   CircleUser,
   Home,
   LineChart,
+  LogOut,
   Menu,
   Package,
   Package2,
@@ -35,14 +36,28 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Outlet } from 'react-router-dom'
 import myStore
  from '@/store'
+ import { useNavigate } from 'react-router-dom'
 
 
 
 
 const Dashboardlayout = ({children}) => {
   const { setToken, addToken } = myStore();
+  const navigate = useNavigate()
   console.log("tokenyha bhi",setToken);
+
+useEffect(()=>{
+  if(setToken==="" || !setToken){
+    navigate("/auth/login")
+ }
+
+},[setToken])
+
+const Logout = ()=>{
+  addToken("")
   
+}
+ 
 
 
   return (
@@ -207,7 +222,11 @@ const Dashboardlayout = ({children}) => {
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button onClick={Logout} variant={'link'}
+              >Logout
+              </Button>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
