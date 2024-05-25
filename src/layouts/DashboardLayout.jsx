@@ -1,6 +1,6 @@
 import React, { Children, useEffect } from 'react'
 
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import {
   Bell,
   CircleUser,
@@ -76,46 +76,37 @@ const Logout = ()=>{
         </div>
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-            <Link
-              to={""}
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+            <NavLink
+              to={"/dashboard/home"}
+              className={({isActive})=>{
+                return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${isActive && 'bg-muted'}`
+              }}
             >
               <Home className="h-4 w-4" />
              Home
-            </Link>
-            <Link
-              to={""}
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+            </NavLink>
+            <NavLink
+              to={"/dashboard/restaurants"}
+              className={({isActive})=>{
+                return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${isActive && 'bg-muted'}`
+              }}
             >
               <ShoppingCart className="h-4 w-4" />
               Restaurants
-            </Link>
-            <Link
-              to={""}
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+            </NavLink>
+            <NavLink
+              to={"/dashboard/dishes"}
+              className={({isActive})=>{
+                return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${isActive && 'bg-muted'}`
+              }}
             >
               <ShoppingCart className="h-4 w-4" />
               Dishes
-            </Link>
+            </NavLink>
            
           </nav>
         </div>
-        <div className="mt-auto p-4">
-          <Card x-chunk="dashboard-02-chunk-0">
-            <CardHeader className="p-2 pt-0 md:p-4">
-              <CardTitle>Upgrade to Pro</CardTitle>
-              <CardDescription>
-                Unlock all features and get unlimited access to our support
-                team.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-              <Button size="sm" className="w-full">
-                Upgrade
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+
       </div>
     </div>
     <div className="flex flex-col">
@@ -133,68 +124,43 @@ const Logout = ()=>{
           </SheetTrigger>
           <SheetContent side="left" className="flex flex-col">
             <nav className="grid gap-2 text-lg font-medium">
-              <Link
+              <NavLink
                 href="#"
-                className="flex items-center gap-2 text-lg font-semibold"
+                className="mx-[-0.65rem]  flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
               >
                 <Package2 className="h-6 w-6" />
                 <span className="sr-only">Acme Inc</span>
-              </Link>
-              <Link
-                href="#"
+              </NavLink>
+              <NavLink
+                 to={"/dashboard/home"}
                 className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
               >
                 <Home className="h-5 w-5" />
-                Dashboard
-              </Link>
+                Home
+              </NavLink>
               <Link
-                href="#"
+                 to={"/dashboard/restaurants"}
                 className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
               >
                 <ShoppingCart className="h-5 w-5" />
-                Orders
+                Restaurants
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   6
                 </Badge>
               </Link>
               <Link
                 href="#"
-                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
               >
-                <Package className="h-5 w-5" />
-                Products
+                <ShoppingCart className="h-5 w-5" />
+                dishes
+                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                  6
+                </Badge>
               </Link>
-              <Link
-                href="#"
-                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              >
-                <Users className="h-5 w-5" />
-                Customers
-              </Link>
-              <Link
-                href="#"
-                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              >
-                <LineChart className="h-5 w-5" />
-                Analytics
-              </Link>
+            
             </nav>
-            <div className="mt-auto">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Upgrade to Pro</CardTitle>
-                  <CardDescription>
-                    Unlock all features and get unlimited access to our
-                    support team.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button size="sm" className="w-full">
-                    Upgrade
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+           
           </SheetContent>
         </Sheet>
         <div className="w-full flex-1">

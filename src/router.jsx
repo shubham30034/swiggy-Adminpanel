@@ -5,6 +5,8 @@ import Register from "./pages/RegisterPage";
 import Dashboardlayout from "./layouts/DashboardLayout";
 import Dishes from "./pages/Dishes";
 import AuthLayout from "./layouts/AuthLayout";
+import Restaurants from "./pages/Restaurants";
+import CreateRestaurants from "./pages/CreateRestaurants";
 
 
 const router = createBrowserRouter([
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
             {
                 path:"dishes",
                 element:<Dishes/>
+            },
+            {
+                path : "restaurants",
+                element : <Restaurants/>
+            },
+            {
+                path : "create/restaurant",
+                element : <CreateRestaurants/>
             }
         ]
     },
