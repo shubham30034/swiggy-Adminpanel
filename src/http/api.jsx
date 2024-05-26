@@ -24,6 +24,20 @@ export const register = async(data)=>{
     }
 }
 
+ export const userDetails = async(token)=>{
+    try {
+        const response = await api.get('api/v1/getUser',{
+            headers: {
+                'authorization': `${token}` 
+            }
+        })
+        return response
+    } catch (error) {
+         throw error
+    }
+ }
+
+
 export const getAllRes = async (token) => {
 
     try {

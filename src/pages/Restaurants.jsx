@@ -36,6 +36,7 @@ import { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from 
 import myStore from '@/store';
 import { CirclePlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Pencil } from 'lucide-react';
 
 const Restaurants = () => {
   const { setToken } = myStore();
@@ -113,8 +114,8 @@ const Restaurants = () => {
                         <TableHead className="hidden md:table-cell">
                           Created at
                         </TableHead>
-                        <TableHead>
-                          <span className="sr-only">Actions</span>
+                        <TableHead className="">
+                          <span className="">Action</span>
                         </TableHead>
                       </TableRow>
                     </TableHeader>
@@ -151,10 +152,10 @@ const Restaurants = () => {
                                   <Button
                                     aria-haspopup="true"
                                     size="icon"
-                                    variant="ghost"
+                                    variant="outline" 
                                   >
                                    
-                                    <span className="sr-only">Toggle menu</span>
+                                    <span className=""><Pencil /></span>
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
