@@ -37,6 +37,7 @@ import { Outlet } from 'react-router-dom'
 import myStore
  from '@/store'
  import { useNavigate } from 'react-router-dom'
+ import { Toaster } from "@/components/ui/toaster"
 
 
 
@@ -198,6 +199,7 @@ const Logout = ()=>{
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
         <Outlet/>
+        <Toaster />
       </main>
     </div>
   </div>

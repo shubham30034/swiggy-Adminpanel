@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -21,12 +21,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { FaEdit } from "react-icons/fa";
-import { set } from 'react-hook-form';
-
+import { useToast } from "@/components/ui/use-toast";
 
 const UserDetails = () => {
   const { setToken } = myStore();
   const queryClient = useQueryClient();
+  const [updateError, setUpdateError] = useState();
+  const { toast } = useToast();
 
   const updateName = useRef();
   const updateEmail = useRef();
@@ -41,12 +42,28 @@ const UserDetails = () => {
     }
   });
 
-  const mutation = useMutation( {
-     mutationFn:updateUser,
+  const mutation = useMutation({
+    mutationFn: updateUser,
     onSuccess: () => {
-      // Invalidate and refetch user details
       queryClient.invalidateQueries('userDetails');
+      toast({
+        title: "Success",
+        description: "User details updated successfully!",
+        status: "success",
+        duration: 1000,
+      });
     },
+    onError: (error) => {
+      setUpdateError(error?.response?.data?.message);
+      console.log(updateError);
+      toast({
+        variant:"destructive",
+        title: "Error",
+        description: `Error updating user details: ${updateError}`,
+        status: "error",
+        duration: 1000,
+      });
+    }
   });
 
   if (isLoading || isPending) {
@@ -68,10 +85,7 @@ const UserDetails = () => {
     } else if (field === 'number') {
       updatedDetails.number = updateNumber.current.value;
     }
-
-  
-
-    mutation.mutate({data:updatedDetails,token:setToken});
+    mutation.mutate({ data: updatedDetails, token: setToken });
   };
 
   return (
@@ -112,7 +126,7 @@ const UserDetails = () => {
                       className="mt-4 p-2 border border-gray-300 rounded"
                       ref={updateName}
                     />
-                    <Button className="mt-4" onClick={() => handleUpdate('name')}>Save</Button>
+                    <Button className="mt-4" disabled={mutation.isError} onClick={() => handleUpdate('name')}>Save</Button>
                   </SheetHeader>
                 </SheetContent>
               </Sheet>
