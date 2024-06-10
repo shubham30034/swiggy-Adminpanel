@@ -7,6 +7,7 @@ import Dishes from "./pages/Dishes";
 import AuthLayout from "./layouts/AuthLayout";
 import Restaurants from "./pages/Restaurants";
 import CreateRestaurants from "./pages/CreateRestaurants";
+import UpdateRestaurant from "./pages/UpdateRestaurant";
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path : "create/restaurant",
                 element : <CreateRestaurants/>
+            },
+            {
+               path : "update/restaurant",
+               element : <UpdateRestaurant/>
             }
         ]
     },

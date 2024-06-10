@@ -72,3 +72,32 @@ export const createRestaurant = async({ data, token })=>{
     }
 
 }
+
+
+export const deleteRes = async(id)=>{
+    try {
+         const response = await api.delete(`api/v1/deleteRes?resId=${id}`)
+         return response
+    } catch (error) {
+        throw error
+    }
+
+}
+
+
+export const updateUser = async({data,token})=>{
+
+    console.log(data,token,"hehehehe");
+    try {
+        const response = await api.put('api/v1/updateUser',data,{
+            headers: {
+                'authorization': `${token}`,
+                'Content-Type' : 'multipart/form-data'
+            }
+        })
+        return response
+    } catch (error)  {
+        throw error
+        
+    }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Card,
   CardContent,
@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import myStore from '@/store';
-import { userDetails } from '@/http/api';
+import { userDetails, updateUser } from '@/http/api';
 import {
   Sheet,
   SheetContent,
@@ -21,9 +21,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { FaEdit } from "react-icons/fa";
+import { set } from 'react-hook-form';
+
 
 const UserDetails = () => {
   const { setToken } = myStore();
+  const queryClient = useQueryClient();
+
+  const updateName = useRef();
+  const updateEmail = useRef();
+  const updateNumber = useRef();
 
   const { data, isError, isLoading, isPending } = useQuery({
     queryKey: ['userDetails'],
@@ -34,6 +41,14 @@ const UserDetails = () => {
     }
   });
 
+  const mutation = useMutation( {
+     mutationFn:updateUser,
+    onSuccess: () => {
+      // Invalidate and refetch user details
+      queryClient.invalidateQueries('userDetails');
+    },
+  });
+
   if (isLoading || isPending) {
     return <div className="flex justify-center my-20">Loading...</div>;
   }
@@ -42,7 +57,22 @@ const UserDetails = () => {
     return <div className="flex justify-center my-20">Error loading user details.</div>;
   }
 
-  const { name, email, number, role } = data.data.details[0];
+  const user = data.data.details[0];
+
+  const handleUpdate = (field) => {
+    const updatedDetails = {};
+    if (field === 'name') {
+      updatedDetails.name = updateName.current.value;
+    } else if (field === 'email') {
+      updatedDetails.email = updateEmail.current.value;
+    } else if (field === 'number') {
+      updatedDetails.number = updateNumber.current.value;
+    }
+
+  
+
+    mutation.mutate({data:updatedDetails,token:setToken});
+  };
 
   return (
     <div className="flex justify-center">
@@ -51,7 +81,7 @@ const UserDetails = () => {
           <div className="flex flex-col justify-center">
             <CardTitle className="text-lg font-semibold">User Details</CardTitle>
             <CardDescription className="text-sm text-gray-600">
-              {role}
+              {user.role}
             </CardDescription>
           </div>
           <Avatar className="w-24 h-24">
@@ -64,7 +94,7 @@ const UserDetails = () => {
             <div className="flex justify-between items-center">
               <div>
                 <p className="font-medium">Name:</p>
-                <p className="text-gray-800">{name}</p>
+                <p className="text-gray-800">{user.name}</p>
               </div>
               <Sheet>
                 <SheetTrigger>
@@ -78,10 +108,11 @@ const UserDetails = () => {
                     </SheetDescription>
                     <input
                       type="text"
-                      defaultValue={name}
+                      defaultValue={user.name}
                       className="mt-4 p-2 border border-gray-300 rounded"
+                      ref={updateName}
                     />
-                    <Button className="mt-4">Save</Button>
+                    <Button className="mt-4" onClick={() => handleUpdate('name')}>Save</Button>
                   </SheetHeader>
                 </SheetContent>
               </Sheet>
@@ -89,7 +120,7 @@ const UserDetails = () => {
             <div className="flex justify-between items-center">
               <div>
                 <p className="font-medium">Email:</p>
-                <p className="text-gray-800">{email}</p>
+                <p className="text-gray-800">{user.email}</p>
               </div>
               <Sheet>
                 <SheetTrigger>
@@ -103,10 +134,11 @@ const UserDetails = () => {
                     </SheetDescription>
                     <input
                       type="email"
-                      defaultValue={email}
+                      defaultValue={user.email}
                       className="mt-4 p-2 border border-gray-300 rounded"
+                      ref={updateEmail}
                     />
-                    <Button className="mt-4">Save</Button>
+                    <Button className="mt-4" onClick={() => handleUpdate('email')}>Save</Button>
                   </SheetHeader>
                 </SheetContent>
               </Sheet>
@@ -114,7 +146,7 @@ const UserDetails = () => {
             <div className="flex justify-between items-center">
               <div>
                 <p className="font-medium">Phone Number:</p>
-                <p className="text-gray-800">{number}</p>
+                <p className="text-gray-800">{user.number}</p>
               </div>
               <Sheet>
                 <SheetTrigger>
@@ -128,10 +160,11 @@ const UserDetails = () => {
                     </SheetDescription>
                     <input
                       type="tel"
-                      defaultValue={number}
+                      defaultValue={user.number}
                       className="mt-4 p-2 border border-gray-300 rounded"
+                      ref={updateNumber}
                     />
-                    <Button className="mt-4">Save</Button>
+                    <Button className="mt-4" onClick={() => handleUpdate('number')}>Save</Button>
                   </SheetHeader>
                 </SheetContent>
               </Sheet>
