@@ -186,8 +186,9 @@ const Logout = ()=>{
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <Link to={"/dashboard/support"}>
             <DropdownMenuItem>Support</DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Button onClick={Logout} variant={'link'}
