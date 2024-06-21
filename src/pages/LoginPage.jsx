@@ -20,7 +20,6 @@ const Login = () => {
     const mutation = useMutation({
         mutationFn: login,
         onSuccess: (data) => {
-            console.log("login Successful", data.data.token);
 
             addToken(data?.data?.token);
             

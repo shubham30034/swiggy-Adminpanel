@@ -108,7 +108,7 @@ const UserDetails = () => {
         <CardHeader className="bg-gray-100 p-4 flex justify-between items-center">
           <div className="flex flex-col justify-center">
             <CardTitle className="text-lg font-semibold">User Details</CardTitle>
-            <CardDescription className="text-sm text-gray-600">
+            <CardDescription className="text-sm text-gray-600 justify-center ml-4">
               {user.role}
             </CardDescription>
           </div>

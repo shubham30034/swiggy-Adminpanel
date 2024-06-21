@@ -18,7 +18,9 @@ useEffect(()=>{
 
 
   return (
+    <>
     <Outlet/>
+    </>
   )
 }
 

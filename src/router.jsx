@@ -9,6 +9,7 @@ import Restaurants from "./pages/Restaurants";
 import CreateRestaurants from "./pages/CreateRestaurants";
 import UpdateRestaurant from "./pages/UpdateRestaurant";
 import Support from "./pages/support/Support";
+import { Navigate } from "react-router-dom";
 
 
 const router = createBrowserRouter([
@@ -50,7 +51,8 @@ const router = createBrowserRouter([
       children:[
         {
             path:'login',
-            element : <Login/>
+            element : <Login/>,
+            index: true,
             
         },
         {
@@ -62,6 +64,10 @@ const router = createBrowserRouter([
       ]
 
     },
+    {
+        path: "*",
+        element: <Navigate to="/auth/login" replace />
+    }
    
 
 ])
