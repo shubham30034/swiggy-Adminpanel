@@ -2,8 +2,10 @@ import axios from "axios";
 import myStore from "@/store";
 
 const api = axios.create({
-    baseURL: "http://localhost:5000"
+    baseURL: `${import.meta.env.VITE_BACKEND_URL}`
 })
+
+
 
 export const login = async (data) => {
     try {

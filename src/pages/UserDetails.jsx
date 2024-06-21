@@ -33,6 +33,9 @@ const UserDetails = () => {
   const updateName = useRef();
   const updateEmail = useRef();
   const updateNumber = useRef();
+  
+  console.log(import.meta.env.VITE_BACKEND_URL,"gyhfuyjftgdfctgxdrfzasedrazedraz");
+  console.log("chintu");
 
   const { data, isError, isLoading, isPending } = useQuery({
     queryKey: ['userDetails'],
