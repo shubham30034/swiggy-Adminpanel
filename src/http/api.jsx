@@ -13,7 +13,7 @@ export const login = async (data) => {
         return response; // Return the response if successful
     } catch (error) {
         // Handle errors here
-        throw error; // Re-throw the error to be caught by the caller
+        throw error // Re-throw the error to be caught by the caller
     }
 }
 

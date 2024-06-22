@@ -71,6 +71,7 @@ const CreateRestaurants = () => {
            navigate("/dashboard/restaurants");
         },
     });
+    
 
 
 
@@ -119,8 +120,8 @@ const CreateRestaurants = () => {
                                 <span>Cancel</span>
                             </Button>
                             </Link>
-                            <Button type="submit" disable={mutation.isPending}>
-                          {mutation.isPending &&  <LoaderCircle className='animate-spin'/> }
+                            <Button type="submit" disable={mutation.isLoading}>
+                          {mutation.isLoading &&  <LoaderCircle className='animate-spin'/> }
                                 <CirclePlus />
                                 <span>Submit</span>
                             </Button>

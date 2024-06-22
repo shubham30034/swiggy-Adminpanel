@@ -14,6 +14,9 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { register } from '@/http/api'
 import { useRef } from 'react'
+import { signupValidation } from '@/utils/validation/validation'
+import { useState } from 'react'
+import { LoaderCircle } from 'lucide-react';
 
 
 
@@ -24,6 +27,7 @@ const Register = () => {
   const passwordRef = useRef()
   const nameRef =  useRef()
   const numberRef =  useRef()
+  const [error,setError] = useState("")
 
   
   
@@ -37,15 +41,26 @@ const Register = () => {
       console.log("register successful Successful");
       navigate("/auth/login")
     },
+    onError:(error)=>{
+      setError(error.response.data.message)
+  }
   })
 
-  console.log("mutation",mutation);
 
   const handelRegisterSubmit = ()=>{
     const email = emailRef?.current?.value
     const password = passwordRef?.current?.value
     const name = nameRef?.current?.value
     const number = numberRef?.current?.value
+
+    const result = signupValidation({ email, password,name,number });
+       if (!result.success) {
+           const errorMessages = result?.error?.errors[0]?.message
+           setError(errorMessages);
+           return;
+       }
+
+       setError("")
 
     
      mutation.mutateAsync({email,password,name,number,role:"Creater"})
@@ -103,11 +118,11 @@ const Register = () => {
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <Input id="password" type="password" ref={passwordRef} />
+            {error && <h1 className=' text-red-700'>{error}</h1>}
           </div>
-          <Button type="submit" className="w-full my-2" onClick={handelRegisterSubmit} disable={mutation.isPending}>
-          {mutation.  isPending &&  <LoaderCircle className=' animate-spin'/> }     <span>Create an account</span> 
+          <Button type="submit" className="w-full my-2" onClick={handelRegisterSubmit} disable={mutation.isLoading}>
+          {mutation.isLoading &&  <LoaderCircle className=' animate-spin'/> }     <span>Create an account</span> 
           </Button>
-          
         </div>
         <div className="mt-3 text-center text-sm">
           Already have an account?{" "}

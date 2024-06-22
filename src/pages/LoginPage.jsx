@@ -9,11 +9,25 @@ import { login } from "../http/api";
 import { useNavigate } from 'react-router-dom';
 import { LoaderCircle } from 'lucide-react';
 import myStore from '@/store';
+import { useState } from 'react';
+import { loginValidation } from '@/utils/validation/validation';
+
+
+  
+
+
+
+
+
 
 const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const navigate = useNavigate();
+    const [error,setError] = useState("")
+
+
+   
 
     const { setToken, addToken } = myStore();
 
@@ -26,16 +40,32 @@ const Login = () => {
             
             navigate("/dashboard/home");
         },
+        onError:(error)=>{
+            setError(error.response.data.message)
+        }
     });
 
-    console.log("mutation", mutation);
+ 
+
+
+
 
     const handelLoginSubmit = () => {
         const email = emailRef?.current?.value;
         const password = passwordRef?.current?.value;
 
+       const result = loginValidation({ email, password });
+       if (!result.success) {
+           const errorMessages = result?.error?.errors[0]?.message
+           setError(errorMessages);
+           return;
+       }
+
+       setError("")
+
         mutation.mutateAsync({ email, password });
     }
+
 
     return (
         <div className='h-screen justify-center flex items-center'>
@@ -56,10 +86,12 @@ const Login = () => {
                         <Label htmlFor="password">Password</Label>
                         <Input id="password" type="password" required ref={passwordRef} />
                     </div>
+                {  error &&   <h1 className=' text-red-600'>{error}</h1> }
                 </CardContent>
+               
                 <CardFooter>
-                    <Button onClick={handelLoginSubmit} className="w-full flex items-center gap-5" disable={mutation.isPending}>
-                        {mutation.isPending && <LoaderCircle className='animate-spin'/>} 
+                    <Button onClick={handelLoginSubmit} className="w-full flex items-center gap-5" disable={mutation.isLoading}>
+                        {mutation.isLoading && <LoaderCircle className='animate-spin'/>} 
                         <span>Sign in</span>
                     </Button>
                 </CardFooter>
